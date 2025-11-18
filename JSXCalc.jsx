@@ -1,18 +1,53 @@
+// Used Claude so I could get an idea of what I was supposed to do: https://claude.ai/share/f0934dd3-b620-42c6-96e3-9e48843cc19e
+
 function Counter({ start }) {
     const [total, setTotal] = React.useState(start);
+    const [input, setInput] = React.useState('');
+
+    const clear = () => {
+        setTotal(0);
+    }
+    const add = () => {
+        const num = parseInt(input);
+        if (!isNaN(num)) {
+            setTotal(total + num);
+            setInput('');
+        }
+    }
+
+    const minus = () => {
+        const num = parseInt(input);
+        if (!isNaN(num)) {
+            setTotal(total - num);
+            setInput('');
+        }
+    }
+
+    const mult = () => {
+        const num = parseInt(input);
+        if (!isNaN(num)) {
+            setTotal(total * num);
+            setInput('');
+        }
+    }
+
+    const div = () => {
+        const num = parseInt(input);
+        if (!isNaN(num)) {
+            setTotal(total / num);
+            setInput('');
+        }
+    }
+
     return (
         <main>
             <p>Total: {total}</p>
-            <input type="number"></input>
-            <input type="radio" id="add" name="drone" value="add" checked/>
-            <label htmlFor="add">+</label>
-            <input type="radio" id="sub" name="drone" value="sub" />
-            <label htmlFor="sub">-</label>
-            <input type="radio" id="mult" name="drone" value="mult"/>
-            <label htmlFor="mult">×</label>
-            <input type="radio" id="div" name="drone" value="div" />
-            <label htmlFor="div">÷</label>
-            <button onClick={() => setTotal((value) => value + 1)}>=</button>
+            <button onClick={clear}>C</button>
+            <input type="number" value={input} onChange={(e) => setInput(e.target.value)} id="numInput"></input>
+            <button onClick={add}>+</button>
+            <button onClick={minus}>-</button>
+            <button onClick={mult}>×</button>
+            <button onClick={div}>÷</button>
         </main>
     );
 }
