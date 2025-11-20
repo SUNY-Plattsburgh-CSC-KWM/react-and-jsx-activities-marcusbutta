@@ -1,11 +1,15 @@
-function Counter({ start, increment }) {
+function Timer({start, type, increment}) {
     const [counter, setCounter] = React.useState(start);
-    let startBtn = false;
+    const [running, setRunning] = React.useState(false);
+
+    const reset = () => {
+        setCounter(0); setRunning(false);
+    }
 
     React.useEffect(() => {
         const tickTock = () => {
-            if (startBtn) {
-                setCounter((value) => value + 1);
+            if (running && counter > 0) {
+                setCounter((value) => value - 1);
             }
         }
 
@@ -15,16 +19,15 @@ function Counter({ start, increment }) {
             clearInterval(timer);
         };
 
-    }, []);  // [] tells it to only run once
+    }, [running, counter]);  // used claude to learn I had to add running as a dep
 
     return (
         <main>
-            <p>Counter ({increment}ms): {counter}</p>
-            <button onClick={() => setCounter(0)}>
-                Reset
-            </button>
-            <button onClick={() => startBtn = true}>Start</button>
-            <button onClick={() => startBtn = false}>Stop</button>
+            <p>Counter ({type}):</p>
+            <input type="text" placeholder="Tomato"/>
+            <input type="number" value={counter} onChange={(e) => setCounter(e.target.value)} />
+            <button onClick={reset}>Reset</button>
+            <button onClick={() => setRunning(!running)}>Start/Stop</button>
         </main>
     );
 }
@@ -32,9 +35,10 @@ function Counter({ start, increment }) {
 function App() {
     return (
         <div>
-            <Counter start={0} increment={1000} />
-            <Counter start={0} increment={100} />
-            <Counter start={0} increment={10} />
+            <Timer start={0} type={"Minutes"} increment={60000} />
+            <Timer start={0} type={"Minutes"} increment={60000}/>
+            <Timer start={0} type={"Seconds"} increment={1000}/>
+            <Timer start={0} type={"Seconds"} increment={1000}/>
         </div>
     );
 }
