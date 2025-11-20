@@ -1,6 +1,7 @@
-function Timer({start, type, increment}) {
+function Timer({start, type}) {
     const [counter, setCounter] = React.useState(start);
     const [running, setRunning] = React.useState(false);
+    const [increment, setIncrement] = React.useState('0');
 
     const reset = () => {
         setCounter(0); setRunning(false);
@@ -23,9 +24,14 @@ function Timer({start, type, increment}) {
 
     return (
         <main>
-            <p>Counter ({type}):</p>
-            <input type="text" placeholder="Tomato"/>
-            <input type="number" value={counter} onChange={(e) => setCounter(e.target.value)} />
+            <label form="title">Name:</label>
+            <input id="name" type="text" placeholder="Tomato"/>
+
+            <label form="ms">MilliSeconds:</label>
+            <input id="ms" type="number" value={increment} onChange={(e) => setIncrement(e.target.value)} />
+
+            <label form="time">Time:</label>
+            <input id="time" type="number" value={counter} onChange={(e) => setCounter(e.target.value)} />
             <button onClick={reset}>Reset</button>
             <button onClick={() => setRunning(!running)}>Start/Stop</button>
         </main>
@@ -35,10 +41,10 @@ function Timer({start, type, increment}) {
 function App() {
     return (
         <div>
-            <Timer start={0} type={"Minutes"} increment={60000} />
-            <Timer start={0} type={"Minutes"} increment={60000}/>
-            <Timer start={0} type={"Seconds"} increment={1000}/>
-            <Timer start={0} type={"Seconds"} increment={1000}/>
+            <Timer start={0}/>
+            <Timer start={0}/>
+            <Timer start={0}/>
+            <Timer start={0}/>
         </div>
     );
 }
